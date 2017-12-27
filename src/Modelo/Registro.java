@@ -215,4 +215,18 @@ public class Registro {
         }
         return res;
     }
+    
+    public boolean Consulta4(){
+        String q= "UPDATE examenversionamiento.empleados set sueldo_bruto = sueldo_bruto*1.1 where codigo > 0;";
+        try {
+            PreparedStatement pstm = conectara.conectar().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+            return true;
+         }catch(SQLException e){
+            System.err.println( e.getMessage() );
+            return false;
+        }
+        
+    } 
 }
