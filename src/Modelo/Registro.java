@@ -201,5 +201,18 @@ public class Registro {
        }
        return tablemodel;
    }
-    
+    public boolean Consulta3(){
+        boolean res=false;
+        String q = " DELETE FROM examenversionamiento.empleados WHERE sueldo_bruto = 120000; " ;
+        try {
+            PreparedStatement pstm = conectara.conectar().prepareStatement(q);
+            if (pstm.executeUpdate() == 1){
+                res=true;
+            }
+            pstm.close();
+         }catch(SQLException e){
+            System.err.println( e.getMessage() );
+        }
+        return res;
+    }
 }
