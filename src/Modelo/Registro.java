@@ -80,17 +80,17 @@ public class Registro {
         }
         return false;
     }
-    /*
+    
     public DefaultTableModel buscar(int codigo){
       DefaultTableModel tablemodel = new DefaultTableModel();
       int registros = 0;
-      String[] columNames = {"Código","Nombre","Categoría","Precio","Calidad 4k"};
+      String[] columNames = {"Código","RUT","Nombre","Apellido","Celular","Correo","Sueldo Bruto", "Est Civil","Depto"};
       try{
-         PreparedStatement pstm = conectara.conectar().prepareStatement( "SELECT count(*) as total FROM taller3.pelicula");
+         PreparedStatement pstm = conectara.conectar().prepareStatement( "SELECT count(*) as total FROM examenversionamiento.empleados");
          ResultSet res = pstm.executeQuery();
          
          res.next();
-         registros = res.getInt("total");
+         registros = 1;
          res.close();
       }catch(SQLException e){
          System.err.println( e.getMessage() );
@@ -98,15 +98,19 @@ public class Registro {
       
       Object[][] data = new String[registros][9];
       try{
-         PreparedStatement pstm = conectara.conectar().prepareStatement("SELECT * FROM taller3.pelicula WHERE codigo ="+codigo+";");
+         PreparedStatement pstm = conectara.conectar().prepareStatement("SELECT * FROM examenversionamiento.empleados WHERE codigo ="+codigo+";");
          ResultSet res = pstm.executeQuery();
          int i=0;
          while(res.next()){
                 data[i][0] = res.getString( "codigo" );
-                data[i][1] = res.getString( "nombre" );
-                data[i][2] = nombre_categoria (Integer.parseInt(res.getString( "id_categoria" )));
-                data[i][3] = res.getString( "precio" );
-                data[i][4] = res.getString( "formato4k" );
+                data[i][1] = res.getString( "rut" );
+                data[i][2] = res.getString("nombre");
+                data[i][3] = res.getString( "apellido" );
+                data[i][4] = res.getString( "celular" );
+                data[i][5] = res.getString( "email" );
+                data[i][6] = res.getString( "sueldo_bruto" );
+                data[i][7] = res.getString( "est_civil" );
+                data[i][8] = res.getString( "nom_depto" );
             i++;
          }
          res.close();
@@ -115,7 +119,7 @@ public class Registro {
             System.err.println( e.getMessage() );
         }
         return tablemodel;
-    }*/
+    }
     
     public DefaultTableModel mostrar(){
       DefaultTableModel tablemodel = new DefaultTableModel();
