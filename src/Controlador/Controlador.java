@@ -15,6 +15,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JOptionPane;
+import Vista.Consultas;
 
 
 public class Controlador implements ActionListener,MouseListener{
@@ -24,6 +25,7 @@ public class Controlador implements ActionListener,MouseListener{
     public static Mostrar interfazmostrar = new Mostrar();
     public static Eliminar interfazeliminar = new Eliminar();
     public static InterfazNueva interfaznueva = new InterfazNueva();
+    public static Consultas interfazconsultas = new Consultas();
     
     //modelo
     private Registro modelo = new Registro();
@@ -77,8 +79,8 @@ public class Controlador implements ActionListener,MouseListener{
         //interfaznueva.boton_consulta2.addActionListener(this);
        // interfaznueva.boton_consulta4.setActionCommand( "boton_consulta4" );
         //interfaznueva.boton_consulta4.addActionListener(this);
-        //interfaznueva.boton_limpiar.setActionCommand( "boton_limpiar" );
-        //interfaznueva.boton_limpiar.addActionListener(this);
+        interfazagregar.boton_limpiar1.setActionCommand( "boton_limpiar1" );
+        interfazagregar.boton_limpiar1.addActionListener(this);
         
         //Interactuar con la tabla
         interfazmostrar.tabla.addMouseListener(this);
@@ -89,7 +91,7 @@ public class Controlador implements ActionListener,MouseListener{
     public void actionPerformed(ActionEvent e) {
         switch ( Accion.valueOf( e.getActionCommand() ) ){
             case boton_agregar:
-               //AGREGAR NUEVO EMPLEADO              
+                //AGREGAR NUEVO EMPLEADO              
                 //codigo
                 int codigoempleado = 0;
                 if (interfazagregar.tf_codigo.getText().length() >= 1 && (interfazagregar.tf_codigo.getText().length()<3 ||interfazagregar.tf_codigo.getText().equals("100"))){
@@ -97,20 +99,22 @@ public class Controlador implements ActionListener,MouseListener{
                 }
                 
                 // run
-                int run = 0;
+                String run = "";
                 if (interfazagregar.tf_run.getText().length() > 0){
-                    run = Integer.valueOf(interfazagregar.tf_run.getText());
+                    run = interfazagregar.tf_run.getText();
                     
                 }
                 
                 // nombre
+                String nombreempleado = "";
                 if (interfazagregar.tf_nombre.getText().length() > 0){
-                 String nombreempleado = interfazagregar.tf_nombre.getText();   
+                 nombreempleado = interfazagregar.tf_nombre.getText();   
                 }
                 
                 // apellido
+                String apellidoempleado = "";
                 if (interfazagregar.tf_apellido.getText().length() > 0){
-                 String apellidoempleado = interfazagregar.tf_nombre.getText();   
+                 apellidoempleado = interfazagregar.tf_nombre.getText();   
                 }
                 
                 
@@ -126,9 +130,9 @@ public class Controlador implements ActionListener,MouseListener{
                     sueldo = Integer.valueOf(interfazagregar.tf_sueldo.getText());
                 }
                 
-                // correo
+                String correoempleado = "";
                 if (interfazagregar.tf_correo.getText().length() > 0){
-                 String correoempleado = interfazagregar.tf_correo.getText();   
+                 correoempleado = interfazagregar.tf_correo.getText();   
                 }
                 
                 // estado civil
@@ -170,7 +174,27 @@ public class Controlador implements ActionListener,MouseListener{
                 }    
                     
                 // CHEQUEAMOS REGLAS DE NEGOCIO
-                 
+                 if (!(codigoempleado > 0) && !(codigoempleado <=100)){
+                     JOptionPane.showMessageDialog(null, "Debe tener un código entre 1 y 100", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else if (!(Integer.valueOf(run)>0)){
+                     JOptionPane.showMessageDialog(null, "Ingrese un numero RUT", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else if (nombreempleado.length()<1){
+                     JOptionPane.showMessageDialog(null, "Ingrese un Nombre", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else if (apellidoempleado.length()<1){
+                     JOptionPane.showMessageDialog(null, "Ingrese Apellido", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else if (celular<99999999 && celular > 1000000000){
+                     JOptionPane.showMessageDialog(null, "Ingrese celular válido", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else if (sueldo <120000) {
+                     JOptionPane.showMessageDialog(null, "Ingrese sueldo mayor o igual a $120.000", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else if (estado.equals("")) {
+                     JOptionPane.showMessageDialog(null, "Seleccione un estado civil", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else {
+                     if (this.modelo.agregar(codigoempleado, run, nombreempleado, apellidoempleado, celular, correoempleado, sueldo, estado, departamento)){
+                     JOptionPane.showMessageDialog(null, "Se ha agregado el registro", "Agregar registro", JOptionPane.OK_OPTION);
+                     } else {
+                     JOptionPane.showMessageDialog(null, "No se ha agregado el registro, el código ya existe", "Agregar registro", JOptionPane.OK_OPTION);
+                     }
+                 }
 
             break;
             case boton_eliminar:
@@ -197,7 +221,7 @@ public class Controlador implements ActionListener,MouseListener{
                 }
             break;
             case boton_modificar:
-                /* MODIFICAR PELICULA DESDE LA TABLA */
+                
                //codigo
                 int modificarcodigo = 0;
                 if (interfazmostrar.tf_modificar_codigo.getText().length() >= 1 && (interfazmostrar.tf_modificar_codigo.getText().length()<3 ||interfazmostrar.tf_modificar_codigo.getText().equals("100"))){
@@ -210,6 +234,10 @@ public class Controlador implements ActionListener,MouseListener{
                 String modificarapellido = interfazmostrar.tf_modificar_apellido.getText();
                 
                 String modificarcorreo = interfazmostrar.tf_modificar_correo.getText();
+                
+                int celularm = Integer.valueOf(interfazmostrar.tf_modificar_celular.getText());
+                
+                int sueldom = Integer.valueOf(interfazmostrar.tf_modificar_sueldo.getText());
                 
                  //run
                 int modificarrun = 0;
@@ -248,10 +276,29 @@ public class Controlador implements ActionListener,MouseListener{
                 }
                 else
                 if (modificadepartamento.equals("Bienestar")){
-                    departamento = "Bienestar";
+                    departamentom = "Bienestar";
                 } 
 
-                
+                if (!(modificarcodigo > 0) && !(modificarcodigo <=100)){
+                     JOptionPane.showMessageDialog(null, "Debe tener un código entre 1 y 100", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else if (!(Integer.valueOf(modificarrun)>0)){
+                     JOptionPane.showMessageDialog(null, "Ingrese un numero RUT", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else if (modificarnombre.length()<1){
+                     JOptionPane.showMessageDialog(null, "Ingrese un Nombre", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else if (modificarapellido.length()<1){
+                     JOptionPane.showMessageDialog(null, "Ingrese Apellido", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else if (celularm<99999999 && celularm > 1000000000){
+                     JOptionPane.showMessageDialog(null, "Ingrese celular válido", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else if (sueldom <120000) {
+                     JOptionPane.showMessageDialog(null, "Ingrese sueldo mayor o igual a $120.000", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else if (estadocivilm.equals("")) {
+                     JOptionPane.showMessageDialog(null, "Seleccione un estado civil", "Error", JOptionPane.WARNING_MESSAGE);
+                 } else {
+                     if (this.modelo.modificar(modificarcodigo, String.valueOf(modificarrun), modificarnombre, modificarapellido, celularm, modificarcorreo, sueldom, estadocivilm, departamentom))
+                     {JOptionPane.showMessageDialog(null, "Se ha modificado el registro", "Éxito", JOptionPane.OK_OPTION);} else {
+                      JOptionPane.showMessageDialog(null, "No se ha modificado el registro", "Error", JOptionPane.OK_OPTION);
+                     }
+                 }
                 
                 //si estan llenos todos los campos ejecutamos la query
                 /*if (modificarcategoria.equals("Categoría") == false &&

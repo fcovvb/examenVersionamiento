@@ -34,23 +34,23 @@ public class Registro {
     Sql conectara = new Sql();
     //
     public boolean agregar(int codigo, String rut, String nombre, String apellido,  int celular, String correo, int sueldobruto, String est_civil, String nom_depto){
-        if( valida_datos(codigo, rut, nombre, apellido, celular, sueldobruto) ) {
+            boolean valida = false;
             //Se arma la consulta
             String q=" INSERT INTO examenversionamiento.empleados(codigo,rut,nombre,apellido,celular,email, sueldo_bruto, est_civil, nom_depto) "
                     + "VALUES ( '" + codigo + "','" + rut + "','"+ nombre +"','" + apellido +"','" + celular +"','" + correo +"','" + sueldobruto +"','" + est_civil +"','" + nom_depto +"');";
             //se ejecuta la consulta
             try {
                 PreparedStatement pstm = conectara.conectar().prepareStatement(q);
-                pstm.execute();
-                pstm.close();
-                return true;
+               if(pstm.executeUpdate()==1){
+                   valida = true;
+               }
+                           
             }catch(SQLException e){
-                System.err.println( e.getMessage() );
+                //System.err.println( e.getMessage() );
             }
-            return false;
-        }
-        else
-         return false;
+            return valida;
+            
+               
     }
     
     public boolean eliminar(int codigo){
@@ -160,13 +160,7 @@ public class Registro {
     }
     
     //Metodo para validar datos *********************************************************************
-    private boolean valida_datos(int codigo, String rut, String nombre, String apellido, int celular, int sueldobruto){ //no valida depto o estado civil, ya que la vista no permite otros valores.
-        
-        if(codigo<=0 || codigo >100 || rut.length()<1 || nombre.length() < 1 || apellido.length()< 1 || celular < 99999999 || celular >= 1000000000 || sueldobruto < 120000 ){
-            return false;
-        }else {
-        return false;}
-    }
+
     
      public DefaultTableModel Consulta2(){
      DefaultTableModel tablemodel = new DefaultTableModel();

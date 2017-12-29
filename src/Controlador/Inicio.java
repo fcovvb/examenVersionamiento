@@ -10,7 +10,7 @@ package Controlador;
  * @author Duoc UC
  */
 public class Inicio {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         
          new Controlador().iniciar();
         

@@ -6,7 +6,7 @@
 package Vista;
 
 import java.awt.Color;
-import modelo.Sql;
+import Modelo.Sql;
 
 /**
  *
@@ -37,6 +37,7 @@ public class Empleados extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        consultas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Base Empleados");
@@ -79,6 +80,14 @@ public class Empleados extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem4);
 
+        consultas.setText("Consultas Especiales");
+        consultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultasActionPerformed(evt);
+            }
+        });
+        jMenu2.add(consultas);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -113,9 +122,14 @@ public class Empleados extends javax.swing.JFrame {
         Controlador.Controlador.interfazeliminar.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void consultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultasActionPerformed
+        Controlador.Controlador.interfazconsultas.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_consultasActionPerformed
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JMenuItem consultas;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
