@@ -6,7 +6,7 @@
 package Vista;
 
 import java.awt.Color;
-import Modelo.Sql;
+import Modelo.BasedeDatos;
 
 /**
  *

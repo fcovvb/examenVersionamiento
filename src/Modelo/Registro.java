@@ -31,7 +31,7 @@ public class Registro {
 
     public Registro(){ }
     
-    Sql conectara = new Sql();
+    BasedeDatos conectara = new BasedeDatos();
     //
     public boolean agregar(int codigo, String rut, String nombre, String apellido,  int celular, String correo, int sueldobruto, String est_civil, String nom_depto){
             boolean valida = false;
